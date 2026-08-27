@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stay Hydrated, My Love! 💧🌸</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Font for a cute aesthetic -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background floating hearts / sparkles container -->
+    <div class="bg-hearts" id="bgHearts"></div>
+
+    <main class="card" id="mainCard">
+        <!-- Initial Prompt Section -->
+        <div id="promptSection" class="section-content">
+            <!-- Cute Animated Cat Container -->
+            <div class="cat-container">
+                <div class="cat">
+                    <div class="ears"></div>
+                    <div class="face">
+                        <div class="eyes"></div>
+                        <div class="nose"></div>
+                        <div class="mouth"></div>
+                    </div>
+                    <!-- Paws holding a water glass -->
+                    <div class="paws">
+                        <div class="glass">🥛</div>
+                    </div>
+                </div>
+            </div>
+
+            <h1>Hey gorgeous, time to hydrate! 💕</h1>
+            <p>The little kitty noticed you haven't had water in a while. Please drink up for me?</p>
+
+            <!-- Interactive Button -->
+            <button id="drinkBtn" class="primary-btn" onclick="celebrate()">Click me! 😋</button>
+        </div>
+
+        <!-- Video & Romantic Message Section (Revealed on Click) -->
+        <div id="rewardSection" class="section-content reward-section hidden">
+            <!-- MP4 Video Player -->
+            <div class="video-wrapper">
+                <video id="rewardVideo" playsinline loop controls>
+                    <source src="image/can_you_make_it_animate_like_t.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <!-- Romantic Message -->
+            <div class="romantic-message">
+                <div class="sparkle-icons">🌸 ✨ 💖 ✨ 🌸</div>
+                <h2>Here's a flower for my pretty girl 🌸</h2>
+                <p class="love-subtitle">Stay hydrated baby, I love you! 💕</p>
+            </div>
+
+            <button class="reset-btn" onclick="resetView()">Drink more water 💧</button>
+        </div>
+    </main>
+
+    <script>
+        function createHeartBurst() {
+            const emojis = ['🌸', '💖', '💐', '✨', '💧', '🌷', '💕', '🥰', '🌹'];
+            const card = document.getElementById('mainCard');
+            const rect = card.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 26; i++) {
+                const particle = document.createElement('span');
+                particle.className = 'burst-particle';
+                particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 160 + 70;
+                const dx = Math.cos(angle) * velocity;
+                const dy = Math.sin(angle) * velocity;
+                
+                particle.style.setProperty('--dx', `${dx}px`);
+                particle.style.setProperty('--dy', `${dy}px`);
+                particle.style.left = `${centerX}px`;
+                particle.style.top = `${centerY}px`;
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1200);
+            }
+        }
+
+        function celebrate() {
+            const promptSec = document.getElementById('promptSection');
+            const rewardSec = document.getElementById('rewardSection');
+            const video = document.getElementById('rewardVideo');
+            const card = document.getElementById('mainCard');
+            
+            createHeartBurst();
+
+            // Smooth transition animation
+            card.classList.add('expanded');
+            promptSec.classList.add('fade-out');
+            
+            setTimeout(() => {
+                promptSec.classList.add('hidden');
+                promptSec.classList.remove('fade-out');
+                
+                rewardSec.classList.remove('hidden');
+                rewardSec.classList.add('fade-in');
+                
+                // Play the MP4 video
+                video.currentTime = 0;
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(err => {
+                        console.log("Autoplay prevented:", err);
+                    });
+                }
+            }, 300);
+        }
+
+        function resetView() {
+            const promptSec = document.getElementById('promptSection');
+            const rewardSec = document.getElementById('rewardSection');
+            const video = document.getElementById('rewardVideo');
+            const card = document.getElementById('mainCard');
+            
+            video.pause();
+            rewardSec.classList.add('fade-out');
+            
+            setTimeout(() => {
+                rewardSec.classList.add('hidden');
+                rewardSec.classList.remove('fade-in', 'fade-out');
+                card.classList.remove('expanded');
+                
+                promptSec.classList.remove('hidden');
+                promptSec.classList.add('fade-in');
+                setTimeout(() => promptSec.classList.remove('fade-in'), 300);
+            }, 250);
+        }
+
+        // Ambient floating background hearts & blossoms
+        function spawnBgHeart() {
+            const bg = document.getElementById('bgHearts');
+            if (!bg) return;
+            const heart = document.createElement('div');
+            heart.className = 'floating-bg-item';
+            const items = ['🌸', '💖', '💧', '✨', '🤍', '🌺', '🌷'];
+            heart.innerText = items[Math.floor(Math.random() * items.length)];
+            heart.style.left = Math.random() * 95 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            heart.style.fontSize = (Math.random() * 12 + 14) + 'px';
+            bg.appendChild(heart);
+            setTimeout(() => heart.remove(), 9000);
+        }
+        setInterval(spawnBgHeart, 700);
+    </script>
+</body>
+</html>
