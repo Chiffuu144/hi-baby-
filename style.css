@@ -259,6 +259,18 @@ h1 {
     transform: translateY(0) scale(0.97);
 }
 
+/* Locked/disabled state — until 8 glasses are filled */
+.btn-locked,
+.btn-locked:hover,
+.btn-locked:active {
+    background: linear-gradient(135deg, #d4a0b0 0%, #e8b4c8 100%) !important;
+    color: rgba(255,255,255,0.75) !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
+    opacity: 0.65;
+}
+
 /* Surprise Links & CTAs */
 .surprise-link-container {
     margin-top: 18px;

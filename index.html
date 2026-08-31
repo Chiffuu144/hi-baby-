@@ -51,7 +51,7 @@
             </div>
 
             <!-- Interactive Button -->
-            <button id="drinkBtn" class="primary-btn" onclick="celebrate()">I drank water! 💧</button>
+            <button id="drinkBtn" class="primary-btn btn-locked" onclick="celebrate()" disabled>I drank water! 💧</button>
             
             <div class="surprise-link-container">
                 <a href="date.html" class="surprise-btn">Wait baby, I have a question for you... 💌✨</a>
@@ -149,9 +149,13 @@
                 if (cupsFilled >= 8) {
                     drinkBtn.innerText = "I'm done drinking 8 glasses of water today! 🥰🎉💧";
                     drinkBtn.classList.add('goal-complete-btn');
+                    drinkBtn.classList.remove('btn-locked');
+                    drinkBtn.disabled = false;
                 } else {
                     drinkBtn.innerText = "I drank water! 💧";
                     drinkBtn.classList.remove('goal-complete-btn');
+                    drinkBtn.classList.add('btn-locked');
+                    drinkBtn.disabled = true;
                 }
             }
         }
