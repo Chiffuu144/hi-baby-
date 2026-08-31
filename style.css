@@ -688,14 +688,14 @@ video {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10000;
-    padding: 20px;
+    padding: 16px;
     animation: fadeIn 0.3s ease;
 }
 
@@ -704,20 +704,24 @@ video {
     border-radius: 28px;
     max-width: 440px;
     width: 100%;
-    padding: 28px 22px;
+    padding: 24px 20px;
     text-align: center;
     position: relative;
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
     border: 2px solid rgba(255, 255, 255, 0.9);
-    max-height: 90vh;
+    max-height: 92vh;
     overflow-y: auto;
     animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.15);
 }
 
+.flowers-modal-card {
+    max-width: 460px;
+}
+
 .close-modal-btn {
     position: absolute;
-    top: 14px;
-    right: 16px;
+    top: 12px;
+    right: 14px;
     background: #ffe5ec;
     border: none;
     width: 32px;
@@ -731,6 +735,7 @@ video {
     justify-content: center;
     transition: all 0.2s ease;
     font-weight: 700;
+    z-index: 15;
 }
 
 .close-modal-btn:hover {
@@ -747,85 +752,109 @@ video {
     font-weight: 700;
     padding: 4px 14px;
     border-radius: 50px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .modal-title {
-    font-size: 20px;
+    font-size: 19px;
     color: #2b2b2b;
     margin-bottom: 12px;
     font-weight: 700;
 }
 
-.modal-note {
-    font-size: 13.5px;
-    color: #888;
+/* ==========================================
+   GIFT 1: FLOWERS STAGE WITH CAT & 4 STICKY NOTES
+   ========================================== */
+.flowers-stage {
+    position: relative;
+    padding: 16px 12px;
+    background: radial-gradient(circle, #fff0f5 0%, #ffd6e0 100%);
+    border-radius: 22px;
+    border: 2px solid #ffb3c6;
     margin-bottom: 14px;
-    font-weight: 600;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(255, 117, 140, 0.15);
 }
 
-/* Bouquet Display */
-.bouquet-display {
-    background: #fff5f8;
-    border: 2px dashed #ffb3c6;
-    border-radius: 20px;
-    padding: 16px 12px;
-    margin-bottom: 16px;
-    cursor: pointer;
+.center-bouquet-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 5;
+    margin: 6px 0 14px 0;
+}
+
+.bouquet-img {
+    max-width: 150px;
+    height: auto;
+    border-radius: 16px;
+    filter: drop-shadow(0 8px 16px rgba(255, 71, 126, 0.35));
+    animation: float 3s ease-in-out infinite;
+}
+
+.cat-companion-img {
+    max-width: 85px;
+    height: auto;
+    position: absolute;
+    bottom: -8px;
+    right: 35px;
+    z-index: 6;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    animation: wobble 2.5s ease-in-out infinite;
+}
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    position: relative;
+    z-index: 10;
+}
+
+.sticky-note {
+    background: #fffdfa;
+    border-radius: 12px;
+    padding: 12px 8px 8px 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    position: relative;
+    border: 1px solid #fae1dd;
+    text-align: center;
     transition: transform 0.2s ease;
 }
 
-.bouquet-display:hover {
-    transform: scale(1.02);
+.sticky-note:hover {
+    transform: scale(1.04) rotate(-1deg);
 }
 
-.bouquet-art {
-    font-size: 36px;
-    letter-spacing: 6px;
-    margin-bottom: 6px;
-    animation: gentlePulse 2s infinite ease-in-out;
+.tape-strip {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 10px;
+    background: rgba(255, 182, 193, 0.7);
+    border-radius: 2px;
 }
 
-.bouquet-ribbon {
-    font-size: 12px;
-    color: #e63946;
+.note-heart {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.note-text {
+    font-size: 11.5px;
     font-weight: 700;
-}
-
-/* Sweet Messages Grid */
-.sweet-messages-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.sweet-msg-card {
-    background: white;
-    border: 1px solid #ffccd5;
-    border-radius: 16px;
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-align: left;
-    box-shadow: 0 3px 8px rgba(255, 117, 140, 0.1);
-    animation: popIn 0.4s ease forwards;
-}
-
-.sweet-msg-card p {
-    font-size: 13.5px;
     color: #444;
     margin: 0;
-    font-weight: 600;
-    line-height: 1.4;
+    line-height: 1.35;
 }
 
-.msg-heart {
-    font-size: 20px;
-    flex-shrink: 0;
-}
-
-/* Letter Modal & Typewriter */
+/* ==========================================
+   GIFT 2: TYPEWRITER LOVE LETTER
+   ========================================== */
 .letter-modal {
     position: relative;
     overflow: hidden;
@@ -847,13 +876,13 @@ video {
     top: -20px;
     font-size: 16px;
     animation: blossomFall linear infinite;
-    opacity: 0.7;
+    opacity: 0.75;
 }
 
 @keyframes blossomFall {
     0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    20% { opacity: 0.8; }
-    80% { opacity: 0.8; }
+    20% { opacity: 0.85; }
+    80% { opacity: 0.85; }
     100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
 }
 
@@ -861,25 +890,25 @@ video {
     background: #fffdf9;
     border: 1.5px solid #f3d7ce;
     border-radius: 18px;
-    padding: 20px 18px;
-    margin-bottom: 16px;
+    padding: 18px 16px;
+    margin-bottom: 14px;
     text-align: left;
     position: relative;
     z-index: 2;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    min-height: 220px;
+    min-height: 200px;
 }
 
 .letter-stamp {
     position: absolute;
-    top: 12px;
-    right: 14px;
-    font-size: 22px;
+    top: 10px;
+    right: 12px;
+    font-size: 20px;
     opacity: 0.8;
 }
 
 .typewriter-content {
-    font-size: 14px;
+    font-size: 13.5px;
     color: #333;
     line-height: 1.65;
     font-weight: 600;
@@ -892,57 +921,77 @@ video {
     animation: blink 0.8s infinite;
 }
 
+.modal-actions-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    z-index: 5;
+    flex-wrap: wrap;
+}
+
 .retype-btn {
-    background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
-    color: white;
-    border: none;
-    padding: 10px 24px;
-    font-size: 13.5px;
+    background: #fff0f3;
+    color: #ff477e;
+    border: 1.5px solid #ffccd5;
+    padding: 8px 20px;
+    font-size: 13px;
     font-weight: 700;
     border-radius: 50px;
     cursor: pointer;
     font-family: 'Quicksand', sans-serif;
-    box-shadow: 0 4px 12px rgba(255, 117, 140, 0.35);
     transition: all 0.2s ease;
-    position: relative;
-    z-index: 2;
 }
 
 .retype-btn:hover {
+    background: #ffe5ec;
+    border-color: #ff477e;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(255, 117, 140, 0.5);
 }
 
-/* Song Modal & Vinyl Player */
+/* ==========================================
+   GIFT 3: MUSIC PLAYER WITH VINYL DISK
+   ========================================== */
 .song-sub {
-    font-size: 14px;
+    font-size: 13.5px;
     color: #ff4d6d;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
-.vinyl-player-box {
+.music-player-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: #fff0f5;
+    border: 2px solid #ffccd5;
+    border-radius: 20px;
+    padding: 14px 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.vinyl-box {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 14px;
 }
 
 .vinyl-disk {
-    width: 80px;
-    height: 80px;
-    background: #1a1a1a;
+    width: 75px;
+    height: 75px;
+    background: radial-gradient(circle, #2b2b2b 30%, #111 70%, #000 100%);
     border-radius: 50%;
+    border: 3px solid #ffccd5;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
     display: flex;
-    justify-content: center;
     align-items: center;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-    margin-bottom: 10px;
-    border: 3px solid #333;
+    justify-content: center;
     position: relative;
 }
 
 .vinyl-disk.spinning {
-    animation: rotateVinyl 4s linear infinite;
+    animation: rotateVinyl 3.5s linear infinite;
 }
 
 @keyframes rotateVinyl {
@@ -950,44 +999,67 @@ video {
     100% { transform: rotate(360deg); }
 }
 
-.vinyl-center {
-    width: 28px;
-    height: 28px;
+.vinyl-label {
+    width: 26px;
+    height: 26px;
     background: #ff477e;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 12px;
+    color: white;
+}
+
+.player-card-box {
+    flex: 1;
+    min-width: 210px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(255, 71, 126, 0.2);
+    border: 2px solid #ff758c;
+    background: #000;
 }
 
 .song-quote {
     background: #fff0f5;
     border-radius: 12px;
-    padding: 8px 14px;
-    margin-bottom: 12px;
+    padding: 8px 12px;
+    margin-bottom: 10px;
 }
 
 .song-quote p {
-    font-size: 13.5px;
+    font-size: 13px;
     color: #d81b60;
     margin: 0;
     font-weight: 700;
 }
 
-.video-embed-box {
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-    margin-bottom: 12px;
-    background: #000;
-}
-
 .song-footer-note {
-    font-size: 13px;
+    font-size: 12.5px;
     color: #ff477e;
     font-weight: 700;
-    margin: 0;
+    margin-bottom: 12px;
+}
+
+/* Back Button */
+.back-pill-btn {
+    background: linear-gradient(135deg, #ff477e 0%, #ff70a6 100%);
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    box-shadow: 0 6px 16px rgba(255, 71, 126, 0.4);
+    transition: all 0.2s ease;
+}
+
+.back-pill-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 20px rgba(255, 71, 126, 0.55);
 }
 
 /* Burst Particle Animation */
@@ -1112,5 +1184,17 @@ video {
 
     .gift-title {
         font-size: 12px;
+    }
+    
+    .notes-grid {
+        gap: 6px;
+    }
+    
+    .sticky-note {
+        padding: 10px 4px 6px 4px;
+    }
+    
+    .note-text {
+        font-size: 10.5px;
     }
 }
