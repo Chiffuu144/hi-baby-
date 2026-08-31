@@ -102,6 +102,21 @@
                 noBtn.innerText = noTexts[noTexts.length - 1];
             }
 
+            // Dramatically grow the YES button with each click
+            const baseFontSize = 18;
+            const basePadY = 14;
+            const basePadX = 34;
+
+            const newFontSize = baseFontSize + (noClickCount * 4);
+            const newPadY = basePadY + (noClickCount * 3.5);
+            const newPadX = basePadX + (noClickCount * 7);
+            const scale = 1 + (noClickCount * 0.1);
+
+            yesBtn.style.fontSize = `${newFontSize}px`;
+            yesBtn.style.padding = `${newPadY}px ${newPadX}px`;
+            yesBtn.style.transform = `scale(${scale})`;
+            yesBtn.style.zIndex = "50";
+
             // Check if 10 or more clicks (Broken Button state)
             if (noClickCount >= 10) {
                 noBtn.classList.add('broken-btn');
@@ -113,11 +128,6 @@
                 hint.innerText = "The 'No' button gave up! You have to say YES now hehe 💕";
                 return;
             }
-
-            // Grow the YES button
-            const scale = 1 + (noClickCount * 0.18);
-            yesBtn.style.transform = `scale(${scale})`;
-            yesBtn.style.zIndex = "50";
 
             // Move the NO button away
             moveNoButton();
