@@ -166,7 +166,7 @@
     </div>
 
     <!-- ==========================================
-         GIFT 3 MODAL: Auto-Playing Song "Nahanap Kita" by Amiel Sol
+         GIFT 3 MODAL: Static Audio Player "Nahanap Kita" by Amiel Sol
          ========================================== -->
     <div id="giftModal3" class="gift-modal hidden">
         <div class="modal-card song-modal">
@@ -175,6 +175,14 @@
             <h2 class="modal-title">A Song For You Only 🌹</h2>
             <p class="song-sub"><strong>Nahanap Kita</strong> — Amiel Sol</p>
 
+            <!-- HTML5 Static Audio Element -->
+            <audio id="localSongAudio" preload="auto">
+                <source src="image/song.mp3" type="audio/mpeg">
+                <source src="image/Nahanap%20Kita%20-%20Amiel%20Sol%20(Official%20Music%20Video)%20-%20Amiel%20Sol%20(128k).mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <!-- Pink Music Player Layout (Reference Style) -->
             <div class="music-player-layout">
                 <div class="vinyl-box">
                     <div class="vinyl-disk" id="vinylDisk">
@@ -183,7 +191,33 @@
                 </div>
 
                 <div class="player-card-box">
-                    <iframe id="songIframe" width="100%" height="200" src="" title="Nahanap Kita - Amiel Sol" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="player-header">
+                        <span class="track-title">Nahanap Kita</span>
+                        <span class="track-artist">Amiel Sol</span>
+                    </div>
+
+                    <!-- Equalizer animated waves -->
+                    <div class="sound-wave-container" id="soundWaves">
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                    </div>
+
+                    <!-- Audio Controls & Progress -->
+                    <div class="audio-controls-row">
+                        <button id="audioPlayPauseBtn" class="play-pause-btn" onclick="toggleAudio()">⏸</button>
+                        <div class="progress-container" onclick="seekAudio(event)">
+                            <div class="progress-bar" id="audioProgressBar"></div>
+                        </div>
+                    </div>
+                    <div class="time-display">
+                        <span id="currentTime">0:00</span>
+                        <span id="totalDuration">3:24</span>
+                    </div>
                 </div>
             </div>
 
@@ -217,6 +251,38 @@
         window.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem('dateAccepted') === 'true') {
                 showCelebrationDirectly();
+            }
+
+            // Setup local audio listener
+            const audio = document.getElementById('localSongAudio');
+            const progressBar = document.getElementById('audioProgressBar');
+            const currentElem = document.getElementById('currentTime');
+            const durationElem = document.getElementById('totalDuration');
+
+            if (audio) {
+                audio.addEventListener('timeupdate', () => {
+                    if (audio.duration) {
+                        const percent = (audio.currentTime / audio.duration) * 100;
+                        if (progressBar) progressBar.style.width = `${percent}%`;
+
+                        const curM = Math.floor(audio.currentTime / 60);
+                        const curS = Math.floor(audio.currentTime % 60);
+                        if (currentElem) currentElem.innerText = `${curM}:${curS < 10 ? '0' : ''}${curS}`;
+
+                        const durM = Math.floor(audio.duration / 60);
+                        const durS = Math.floor(audio.duration % 60);
+                        if (durationElem) durationElem.innerText = `${durM}:${durS < 10 ? '0' : ''}${durS}`;
+                    }
+                });
+
+                audio.addEventListener('ended', () => {
+                    const disk = document.getElementById('vinylDisk');
+                    const waves = document.getElementById('soundWaves');
+                    const btn = document.getElementById('audioPlayPauseBtn');
+                    if (disk) disk.classList.remove('spinning');
+                    if (waves) waves.classList.remove('active');
+                    if (btn) btn.innerText = "▶";
+                });
             }
         });
 
@@ -351,12 +417,23 @@
                 startTypewriter();
                 startFallingBlossoms();
             } else if (giftNum === 3) {
-                const iframe = document.getElementById('songIframe');
-                if (iframe) {
-                    iframe.src = "https://www.youtube.com/embed/FPz9GSC5QlM?autoplay=1&enablejsapi=1&playsinline=1";
-                }
+                const audio = document.getElementById('localSongAudio');
                 const disk = document.getElementById('vinylDisk');
+                const waves = document.getElementById('soundWaves');
+                const btn = document.getElementById('audioPlayPauseBtn');
+
+                if (audio) {
+                    audio.currentTime = 0;
+                    const playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(err => {
+                            console.log("Audio play caught:", err);
+                        });
+                    }
+                }
                 if (disk) disk.classList.add('spinning');
+                if (waves) waves.classList.add('active');
+                if (btn) btn.innerText = "⏸";
                 createEmojiBurst(['🎵', '🎶', '🌹', '💖', '✨']);
             }
         }
@@ -371,10 +448,49 @@
             if (giftNum === 2) {
                 if (typeInterval) clearInterval(typeInterval);
             } else if (giftNum === 3) {
-                const iframe = document.getElementById('songIframe');
-                if (iframe) iframe.src = "";
+                const audio = document.getElementById('localSongAudio');
                 const disk = document.getElementById('vinylDisk');
+                const waves = document.getElementById('soundWaves');
+                const btn = document.getElementById('audioPlayPauseBtn');
+
+                if (audio) {
+                    audio.pause();
+                    audio.currentTime = 0;
+                }
                 if (disk) disk.classList.remove('spinning');
+                if (waves) waves.classList.remove('active');
+                if (btn) btn.innerText = "▶";
+            }
+        }
+
+        function toggleAudio() {
+            const audio = document.getElementById('localSongAudio');
+            const disk = document.getElementById('vinylDisk');
+            const waves = document.getElementById('soundWaves');
+            const btn = document.getElementById('audioPlayPauseBtn');
+
+            if (!audio) return;
+
+            if (audio.paused) {
+                audio.play();
+                if (disk) disk.classList.add('spinning');
+                if (waves) waves.classList.add('active');
+                if (btn) btn.innerText = "⏸";
+            } else {
+                audio.pause();
+                if (disk) disk.classList.remove('spinning');
+                if (waves) waves.classList.remove('active');
+                if (btn) btn.innerText = "▶";
+            }
+        }
+
+        function seekAudio(e) {
+            const audio = document.getElementById('localSongAudio');
+            const container = e.currentTarget;
+            if (audio && audio.duration) {
+                const rect = container.getBoundingClientRect();
+                const pos = (e.clientX - rect.left) / rect.width;
+                audio.currentTime = pos * audio.duration;
             }
         }
 
