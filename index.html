@@ -21,24 +21,16 @@
 
         <!-- Initial Prompt Section -->
         <div id="promptSection" class="section-content">
-            <!-- Cute Animated Cat Container -->
+            <!-- Cute Cat Container with Cat holding water glass -->
             <div class="cat-container">
-                <div class="cat">
-                    <div class="ears"></div>
-                    <div class="face">
-                        <div class="eyes"></div>
-                        <div class="nose"></div>
-                        <div class="mouth"></div>
-                    </div>
-                    <!-- Paws holding a water glass -->
-                    <div class="paws">
-                        <div class="glass">🥛</div>
-                    </div>
+                <div class="cute-cat-drink-wrapper">
+                    <img src="image/cat_phone.png" alt="Cute Cat" class="cute-kitty-img">
+                    <div class="water-glass-overlay">🥛<span class="sparkle-sip">✨</span></div>
                 </div>
             </div>
 
             <h1>Hey gorgeous, time to hydrate! 💕</h1>
-            <p>The little kitty noticed you haven't had water in a while. Please drink up for me?</p>
+            <p id="hydrationEncouragement" class="encouragement-text">The little kitty noticed you haven't had water in a while. Please drink up for me? 🥺🥛</p>
 
             <!-- Water Tracker Counter -->
             <div class="hydration-tracker">
@@ -93,6 +85,18 @@
     <script>
         let cupsFilled = parseInt(localStorage.getItem('cupsFilled')) || 3;
 
+        const hydrationMessages = [
+            "Drink up for me please baby? Your body needs water! 🥺🥛",
+            "Good start baby! Drink more water for me please 💕",
+            "Proud of you! Keep going pretty girl, stay hydrated! 🌸",
+            "Refreshing! 3 glasses down, keep it up baby! 💧✨",
+            "Halfway there my love! You're doing so amazing! 🥰💖",
+            "Rawrrr good girl! Keep drinking more water baby! 🐾💕",
+            "Yayy almost done! Just 2 more glasses, you got this baby! 🌷✨",
+            "Just 1 more glass left! One final sip for your boy! 💍🌹",
+            "YAYYY! 8 glasses done! You reached your goal today! 🎉💖"
+        ];
+
         window.addEventListener('DOMContentLoaded', () => {
             updateCupsUI();
             if (localStorage.getItem('dateAccepted') === 'true') {
@@ -111,6 +115,7 @@
                 cupsFilled = index + 1;
             }
             localStorage.setItem('cupsFilled', cupsFilled);
+            createHeartBurst();
             updateCupsUI();
         }
 
@@ -125,9 +130,29 @@
                     cup.innerText = '🥛';
                 }
             });
+
             const trackerCount = document.getElementById('trackerCount');
             if (trackerCount) {
                 trackerCount.innerText = `${cupsFilled} / 8 Glasses`;
+            }
+
+            const encMsg = document.getElementById('hydrationEncouragement');
+            if (encMsg) {
+                encMsg.classList.remove('pop-text');
+                void encMsg.offsetWidth;
+                encMsg.innerText = hydrationMessages[cupsFilled] || hydrationMessages[0];
+                encMsg.classList.add('pop-text');
+            }
+
+            const drinkBtn = document.getElementById('drinkBtn');
+            if (drinkBtn) {
+                if (cupsFilled >= 8) {
+                    drinkBtn.innerText = "I'm done drinking 8 glasses of water today! 🥰🎉💧";
+                    drinkBtn.classList.add('goal-complete-btn');
+                } else {
+                    drinkBtn.innerText = "I drank water! 💧";
+                    drinkBtn.classList.remove('goal-complete-btn');
+                }
             }
         }
 
