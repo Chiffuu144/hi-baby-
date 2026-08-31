@@ -102,15 +102,15 @@
                 noBtn.innerText = noTexts[noTexts.length - 1];
             }
 
-            // Dramatically grow the YES button with each click
-            const baseFontSize = 18;
-            const basePadY = 14;
-            const basePadX = 34;
+            // Moderate, balanced growth for YES button per click ("saktong paglaki")
+            const baseFontSize = 17;
+            const basePadY = 13;
+            const basePadX = 30;
 
-            const newFontSize = baseFontSize + (noClickCount * 4.5);
-            const newPadY = basePadY + (noClickCount * 3.8);
-            const newPadX = basePadX + (noClickCount * 7.5);
-            const scale = 1 + (noClickCount * 0.08);
+            const newFontSize = baseFontSize + (noClickCount * 1.6);
+            const newPadY = basePadY + (noClickCount * 1.2);
+            const newPadX = basePadX + (noClickCount * 2.8);
+            const scale = 1 + (noClickCount * 0.025);
 
             yesBtn.style.fontSize = `${newFontSize}px`;
             yesBtn.style.padding = `${newPadY}px ${newPadX}px`;
@@ -143,16 +143,16 @@
 
             // Calculate safe positions that never overlap with yesBtn
             const yesRect = yesBtn.getBoundingClientRect();
-            const safeDistanceY = Math.max(70, (yesRect.height / 2) + 38);
-            const safeDistanceX = Math.min(135, Math.max(75, (yesRect.width / 2) + 50));
+            const safeDistanceY = Math.max(55, (yesRect.height / 2) + 28);
+            const safeDistanceX = Math.min(125, Math.max(65, (yesRect.width / 2) + 35));
 
             const directions = [
                 { x: 0, y: -safeDistanceY },                             // Straight Top
                 { x: 0, y: safeDistanceY },                              // Straight Bottom
-                { x: -safeDistanceX, y: -safeDistanceY * 0.7 },          // Top Left
-                { x: safeDistanceX, y: -safeDistanceY * 0.7 },           // Top Right
-                { x: -safeDistanceX, y: safeDistanceY * 0.7 },           // Bottom Left
-                { x: safeDistanceX, y: safeDistanceY * 0.7 }            // Bottom Right
+                { x: -safeDistanceX, y: -safeDistanceY * 0.65 },         // Top Left
+                { x: safeDistanceX, y: -safeDistanceY * 0.65 },          // Top Right
+                { x: -safeDistanceX, y: safeDistanceY * 0.65 },          // Bottom Left
+                { x: safeDistanceX, y: safeDistanceY * 0.65 }           // Bottom Right
             ];
 
             const chosen = directions[Math.floor(Math.random() * directions.length)];
@@ -160,7 +160,7 @@
             noBtn.style.position = 'relative';
             noBtn.style.left = `${chosen.x}px`;
             noBtn.style.top = `${chosen.y}px`;
-            noBtn.style.transition = 'all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            noBtn.style.transition = 'all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
         }
 
         function handleYesClick() {
