@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Question for You... 💌🌹</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Font for cute romantic aesthetic -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background floating hearts / sparkles container -->
+    <div class="bg-hearts" id="bgHearts"></div>
+
+    <main class="card date-card" id="dateCard">
+        <!-- Top Navigation -->
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-item">💧 Hydration</a>
+            <a href="date.html" class="nav-item active">💌 Special Question</a>
+        </nav>
+
+        <!-- Question Section -->
+        <div id="proposalSection" class="section-content">
+            <!-- Cute Header Badge -->
+            <div class="love-badge-container">
+                <div class="love-badge">
+                    <span class="badge-icon">🌹</span>
+                    <span class="badge-text">For My Pretty Girl</span>
+                </div>
+            </div>
+
+            <!-- Romantic Question Title -->
+            <h1 class="proposal-title">Do you wanna go on a date with me on September 26? 🥺👉👈</h1>
+            <p class="proposal-sub">I planned something super special for both of us... say yes please? 🌸✨</p>
+
+            <!-- Buttons Arena -->
+            <div class="button-arena" id="buttonArena">
+                <button id="yesBtn" class="yes-btn" onclick="handleYesClick()">YES! 🥰💖</button>
+                <button id="noBtn" class="no-btn" onclick="handleNoClick()">No 😢</button>
+            </div>
+            
+            <p id="clickHint" class="click-hint"></p>
+        </div>
+
+        <!-- Yes Celebration Section (Revealed on Yes) -->
+        <div id="celebrationSection" class="section-content celebration-section hidden">
+            <div class="sparkle-icons">💖 🌹 🎉 🌹 💖</div>
+            <h1 class="celebrate-title">YAAAY!! She said YES! 🥰🎉</h1>
+            <p class="celebrate-sub">It's an official date on <strong>September 26, 2026</strong>! 🌹✨</p>
+            
+            <div class="love-letter-box">
+                <p>I promise to give you the sweetest and most unforgettable day, baby! Thank you for making me the happiest person. I love you so much! ❤️💍</p>
+            </div>
+
+            <!-- Countdown Timer to Sept 26 -->
+            <div class="countdown-container">
+                <div class="countdown-label">⏳ Countdown to our special date:</div>
+                <div class="countdown-timer" id="countdownTimer">
+                    <div class="timer-box"><span id="days">00</span><small>Days</small></div>
+                    <div class="timer-box"><span id="hours">00</span><small>Hours</small></div>
+                    <div class="timer-box"><span id="mins">00</span><small>Mins</small></div>
+                    <div class="timer-box"><span id="secs">00</span><small>Secs</small></div>
+                </div>
+            </div>
+
+            <div class="celebrate-actions">
+                <button class="primary-btn" onclick="createMassiveBurst()">More Confetti! 🎉🌸</button>
+                <a href="index.html" class="reset-btn">Back to Hydration 💧</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let noClickCount = 0;
+        const noTexts = [
+            "No 😢",
+            "Are you sure? 🥺",
+            "Really sure? 💔",
+            "Think again?! 🤔",
+            "Last chance! 😭",
+            "Surely not? 🙈",
+            "You might regret this! 🥺",
+            "Don't break my heart 💔",
+            "Are you really really sure? 😢",
+            "Pretty please? 🥺💖",
+            "Oh no you broke it! The only option is yes hehe <3"
+        ];
+
+        function handleNoClick() {
+            noClickCount++;
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const hint = document.getElementById('clickHint');
+
+            // Burst sad/playful emojis on dodge
+            createEmojiBurst(['🥺', '💔', '😢', '🙈', '❓', '💨']);
+
+            // Update No button text
+            if (noClickCount < noTexts.length - 1) {
+                noBtn.innerText = noTexts[noClickCount];
+            } else {
+                noBtn.innerText = noTexts[noTexts.length - 1];
+            }
+
+            // Check if 10 or more clicks (Broken Button state)
+            if (noClickCount >= 10) {
+                noBtn.classList.add('broken-btn');
+                noBtn.style.position = 'relative';
+                noBtn.style.left = '0';
+                noBtn.style.top = '0';
+                noBtn.style.transform = 'none';
+                noBtn.onclick = handleYesClick;
+                hint.innerText = "The 'No' button gave up! You have to say YES now hehe 💕";
+                return;
+            }
+
+            // Grow the YES button
+            const scale = 1 + (noClickCount * 0.18);
+            yesBtn.style.transform = `scale(${scale})`;
+            yesBtn.style.zIndex = "50";
+
+            // Move the NO button away
+            moveNoButton();
+        }
+
+        function moveNoButton() {
+            const noBtn = document.getElementById('noBtn');
+            const arena = document.getElementById('buttonArena');
+            const arenaRect = arena.getBoundingClientRect();
+            
+            // Random offset within arena and safe margins
+            const maxOffsetX = Math.min(window.innerWidth / 2 - 80, 140);
+            const maxOffsetY = 110;
+
+            const randomX = (Math.random() * 2 - 1) * maxOffsetX;
+            const randomY = (Math.random() * 2 - 1) * maxOffsetY;
+
+            noBtn.style.position = 'relative';
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+            noBtn.style.transition = 'all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        }
+
+        function handleYesClick() {
+            createMassiveBurst();
+
+            const proposalSec = document.getElementById('proposalSection');
+            const celebrationSec = document.getElementById('celebrationSection');
+            const dateCard = document.getElementById('dateCard');
+
+            dateCard.classList.add('expanded');
+            proposalSec.classList.add('fade-out');
+
+            setTimeout(() => {
+                proposalSec.classList.add('hidden');
+                celebrationSec.classList.remove('hidden');
+                celebrationSec.classList.add('fade-in');
+                startCountdown();
+            }, 300);
+        }
+
+        function createEmojiBurst(emojis) {
+            const card = document.getElementById('dateCard');
+            const rect = card.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 18; i++) {
+                const particle = document.createElement('span');
+                particle.className = 'burst-particle';
+                particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 150 + 60;
+                const dx = Math.cos(angle) * velocity;
+                const dy = Math.sin(angle) * velocity;
+
+                particle.style.setProperty('--dx', `${dx}px`);
+                particle.style.setProperty('--dy', `${dy}px`);
+                particle.style.left = `${centerX}px`;
+                particle.style.top = `${centerY}px`;
+
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1100);
+            }
+        }
+
+        function createMassiveBurst() {
+            const emojis = ['🌹', '💖', '💐', '✨', '🎉', '💍', '🥰', '💕', '🌸', '❤️'];
+            const card = document.getElementById('dateCard');
+            const rect = card.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('span');
+                particle.className = 'burst-particle';
+                particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 220 + 80;
+                const dx = Math.cos(angle) * velocity;
+                const dy = Math.sin(angle) * velocity;
+
+                particle.style.setProperty('--dx', `${dx}px`);
+                particle.style.setProperty('--dy', `${dy}px`);
+                particle.style.left = `${centerX}px`;
+                particle.style.top = `${centerY}px`;
+
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1300);
+            }
+        }
+
+        // Live Countdown to September 26
+        function startCountdown() {
+            function updateTimer() {
+                const targetDate = new Date('September 26, 2026 00:00:00').getTime();
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    document.getElementById('countdownTimer').innerHTML = "<span>It's Date Day! 🌹🎉💖</span>";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                const dElem = document.getElementById('days');
+                const hElem = document.getElementById('hours');
+                const mElem = document.getElementById('mins');
+                const sElem = document.getElementById('secs');
+
+                if (dElem) dElem.innerText = String(days).padStart(2, '0');
+                if (hElem) hElem.innerText = String(hours).padStart(2, '0');
+                if (mElem) mElem.innerText = String(minutes).padStart(2, '0');
+                if (sElem) sElem.innerText = String(seconds).padStart(2, '0');
+            }
+
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
+        // Ambient floating background hearts & blossoms
+        function spawnBgHeart() {
+            const bg = document.getElementById('bgHearts');
+            if (!bg) return;
+            const heart = document.createElement('div');
+            heart.className = 'floating-bg-item';
+            const items = ['🌸', '💖', '🌹', '✨', '🤍', '🌺', '🌷', '💕'];
+            heart.innerText = items[Math.floor(Math.random() * items.length)];
+            heart.style.left = Math.random() * 95 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            heart.style.fontSize = (Math.random() * 14 + 14) + 'px';
+            bg.appendChild(heart);
+            setTimeout(() => heart.remove(), 9000);
+        }
+        setInterval(spawnBgHeart, 600);
+    </script>
+</body>
+</html>

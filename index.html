@@ -13,6 +13,12 @@
     <div class="bg-hearts" id="bgHearts"></div>
 
     <main class="card" id="mainCard">
+        <!-- Top Navigation -->
+        <nav class="nav-bar">
+            <a href="index.html" class="nav-item active">💧 Hydration</a>
+            <a href="date.html" class="nav-item">💌 Special Question</a>
+        </nav>
+
         <!-- Initial Prompt Section -->
         <div id="promptSection" class="section-content">
             <!-- Cute Animated Cat Container -->
@@ -34,8 +40,30 @@
             <h1>Hey gorgeous, time to hydrate! 💕</h1>
             <p>The little kitty noticed you haven't had water in a while. Please drink up for me?</p>
 
+            <!-- Water Tracker Counter -->
+            <div class="hydration-tracker">
+                <div class="tracker-header">
+                    <span>Daily Water Goal 🌸</span>
+                    <span id="trackerCount" class="tracker-count">3 / 8 Glasses</span>
+                </div>
+                <div class="glasses-row" id="glassesRow">
+                    <span class="cup filled" onclick="toggleCup(0)">💧</span>
+                    <span class="cup filled" onclick="toggleCup(1)">💧</span>
+                    <span class="cup filled" onclick="toggleCup(2)">💧</span>
+                    <span class="cup" onclick="toggleCup(3)">🥛</span>
+                    <span class="cup" onclick="toggleCup(4)">🥛</span>
+                    <span class="cup" onclick="toggleCup(5)">🥛</span>
+                    <span class="cup" onclick="toggleCup(6)">🥛</span>
+                    <span class="cup" onclick="toggleCup(7)">🥛</span>
+                </div>
+            </div>
+
             <!-- Interactive Button -->
-            <button id="drinkBtn" class="primary-btn" onclick="celebrate()">Click me! 😋</button>
+            <button id="drinkBtn" class="primary-btn" onclick="celebrate()">I drank water! 💧</button>
+            
+            <div class="surprise-link-container">
+                <a href="date.html" class="surprise-btn">Wait baby, I have a question for you... 💌✨</a>
+            </div>
         </div>
 
         <!-- Video & Romantic Message Section (Revealed on Click) -->
@@ -55,11 +83,43 @@
                 <p class="love-subtitle">Stay hydrated baby, I love you! 💕</p>
             </div>
 
-            <button class="reset-btn" onclick="resetView()">Drink more water 💧</button>
+            <div class="reward-actions">
+                <a href="date.html" class="date-cta-btn">I have one more question for you... 💌👉</a>
+                <button class="reset-btn" onclick="resetView()">Drink more water 💧</button>
+            </div>
         </div>
     </main>
 
     <script>
+        let cupsFilled = 3;
+
+        function toggleCup(index) {
+            const cups = document.querySelectorAll('.cup');
+            if (index < cupsFilled) {
+                cupsFilled = index;
+            } else {
+                cupsFilled = index + 1;
+            }
+            updateCupsUI();
+        }
+
+        function updateCupsUI() {
+            const cups = document.querySelectorAll('.cup');
+            cups.forEach((cup, idx) => {
+                if (idx < cupsFilled) {
+                    cup.classList.add('filled');
+                    cup.innerText = '💧';
+                } else {
+                    cup.classList.remove('filled');
+                    cup.innerText = '🥛';
+                }
+            });
+            const trackerCount = document.getElementById('trackerCount');
+            if (trackerCount) {
+                trackerCount.innerText = `${cupsFilled} / 8 Glasses`;
+            }
+        }
+
         function createHeartBurst() {
             const emojis = ['🌸', '💖', '💐', '✨', '💧', '🌷', '💕', '🥰', '🌹'];
             const card = document.getElementById('mainCard');

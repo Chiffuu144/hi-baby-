@@ -55,24 +55,61 @@ body {
 
 /* Main Card Container */
 .card {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    padding: 36px 28px;
+    padding: 32px 26px;
     border-radius: 28px;
     box-shadow: 0 15px 35px rgba(255, 107, 139, 0.22), 0 4px 12px rgba(0, 0, 0, 0.04);
     border: 2px solid rgba(255, 255, 255, 0.9);
     text-align: center;
-    max-width: 400px;
+    max-width: 420px;
     width: 100%;
     position: relative;
     z-index: 10;
     transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.2);
 }
 
-.card.expanded {
-    max-width: 460px;
-    padding: 30px 24px;
+.card.expanded, .date-card.expanded {
+    max-width: 470px;
+    padding: 28px 24px;
+}
+
+.date-card {
+    max-width: 450px;
+}
+
+/* Top Navigation Bar */
+.nav-bar {
+    display: inline-flex;
+    background: #fff0f3;
+    padding: 4px;
+    border-radius: 50px;
+    margin-bottom: 22px;
+    border: 1px solid #ffccd5;
+    box-shadow: 0 2px 8px rgba(255, 117, 140, 0.1);
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #ff758c;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 7px 16px;
+    border-radius: 50px;
+    transition: all 0.25s ease;
+    display: inline-block;
+}
+
+.nav-item.active {
+    background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+    color: white;
+    box-shadow: 0 3px 10px rgba(255, 117, 140, 0.35);
+}
+
+.nav-item:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.8);
+    transform: translateY(-1px);
 }
 
 .section-content {
@@ -83,13 +120,13 @@ body {
 .cat-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
 }
 
 .cat {
     position: relative;
-    width: 90px;
-    height: 80px;
+    width: 85px;
+    height: 75px;
     background: #ffb703;
     border-radius: 50% 50% 40% 40%;
     animation: float 2.5s ease-in-out infinite;
@@ -102,9 +139,9 @@ body {
     top: -12px;
     width: 0;
     height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 25px solid #ffb703;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-bottom: 24px solid #ffb703;
 }
 .cat::before { left: 8px; transform: rotate(-15deg); }
 .cat::after { right: 8px; transform: rotate(15deg); }
@@ -112,24 +149,24 @@ body {
 /* Face Details */
 .face {
     position: relative;
-    top: 25px;
+    top: 24px;
 }
 
 .eyes {
     position: absolute;
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
     background: #333;
     border-radius: 50%;
-    box-shadow: 36px 0 0 #333;
+    box-shadow: 34px 0 0 #333;
     left: 20px;
     animation: blink 4s infinite;
 }
 
 .nose {
     position: absolute;
-    top: 18px;
-    left: 40px;
+    top: 17px;
+    left: 38px;
     width: 8px;
     height: 5px;
     background: #ff6f61;
@@ -140,33 +177,79 @@ body {
 .glass {
     position: absolute;
     bottom: -15px;
-    left: 28px;
-    font-size: 28px;
+    left: 26px;
+    font-size: 26px;
     animation: wobble 1.8s ease-in-out infinite;
 }
 
 /* Typography */
 h1 {
-    font-size: 22px;
+    font-size: 21px;
     color: #2b2b2b;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-weight: 700;
 }
 
 p {
-    font-size: 15px;
+    font-size: 14.5px;
     color: #666;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
     line-height: 1.5;
 }
 
-/* Button Styling */
+/* Water Tracker */
+.hydration-tracker {
+    background: #fff8fa;
+    border: 1.5px dashed #ffccd5;
+    border-radius: 18px;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+}
+
+.tracker-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ff5277;
+    margin-bottom: 8px;
+}
+
+.tracker-count {
+    color: #ff758c;
+    background: #ffe5ec;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.glasses-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.cup {
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    user-select: none;
+}
+
+.cup:hover {
+    transform: scale(1.25);
+}
+
+.cup.filled {
+    filter: drop-shadow(0 2px 4px rgba(0, 168, 255, 0.4));
+}
+
+/* Primary Button Styling */
 .primary-btn {
     background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
     color: white;
     border: none;
-    padding: 14px 32px;
-    font-size: 16px;
+    padding: 13px 30px;
+    font-size: 15.5px;
     font-weight: 700;
     border-radius: 50px;
     cursor: pointer;
@@ -174,6 +257,8 @@ p {
     box-shadow: 0 6px 18px rgba(255, 117, 140, 0.4);
     font-family: 'Quicksand', sans-serif;
     outline: none;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .primary-btn:hover {
@@ -183,6 +268,50 @@ p {
 
 .primary-btn:active {
     transform: translateY(0) scale(0.97);
+}
+
+/* Surprise Links & CTAs */
+.surprise-link-container {
+    margin-top: 18px;
+}
+
+.surprise-btn {
+    display: inline-block;
+    color: #ff4d6d;
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 50px;
+    background: #fff0f3;
+    border: 1px solid #ffccd5;
+    transition: all 0.25s ease;
+    animation: gentlePulse 2.5s infinite ease-in-out;
+}
+
+.surprise-btn:hover {
+    background: #ffe5ec;
+    border-color: #ff758c;
+    transform: translateY(-2px);
+}
+
+.date-cta-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff4d6d 0%, #ff758c 100%);
+    color: white;
+    text-decoration: none;
+    padding: 12px 22px;
+    font-size: 14.5px;
+    font-weight: 700;
+    border-radius: 50px;
+    box-shadow: 0 6px 16px rgba(255, 77, 109, 0.4);
+    margin-bottom: 12px;
+    transition: all 0.25s ease;
+}
+
+.date-cta-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 10px 22px rgba(255, 77, 109, 0.55);
 }
 
 /* Video Wrapper & Player */
@@ -199,13 +328,13 @@ p {
     box-shadow: 0 10px 25px rgba(255, 117, 140, 0.25);
     border: 3px solid #ffccd5;
     background: #000;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 }
 
 video {
     width: 100%;
     height: auto;
-    max-height: 380px;
+    max-height: 360px;
     display: block;
     object-fit: contain;
     border-radius: 17px;
@@ -213,13 +342,13 @@ video {
 
 /* Romantic Message */
 .romantic-message {
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     padding: 0 8px;
 }
 
 .sparkle-icons {
-    font-size: 1.1rem;
-    margin-bottom: 8px;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
     animation: gentlePulse 2s infinite ease-in-out;
 }
 
@@ -238,24 +367,225 @@ video {
     margin-bottom: 0;
 }
 
+.reward-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
 /* Reset / Secondary Button */
 .reset-btn {
     background: transparent;
     color: #ff758c;
     border: 1.5px solid #ffccd5;
-    padding: 8px 22px;
+    padding: 8px 20px;
     font-size: 13px;
     font-weight: 700;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.2s ease;
     font-family: 'Quicksand', sans-serif;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .reset-btn:hover {
     background: #fff0f3;
     border-color: #ff758c;
     transform: translateY(-2px);
+}
+
+/* ==========================================
+   DATE PROPOSAL PAGE STYLES
+   ========================================== */
+.love-badge-container {
+    margin-bottom: 14px;
+}
+
+.love-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffe5ec;
+    border: 1px solid #ffb3c6;
+    padding: 5px 16px;
+    border-radius: 50px;
+    color: #e63946;
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: 0 2px 8px rgba(255, 107, 139, 0.15);
+}
+
+.proposal-title {
+    font-size: 21px;
+    color: #2b2b2b;
+    line-height: 1.38;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.proposal-sub {
+    font-size: 14.5px;
+    color: #666;
+    margin-bottom: 28px;
+}
+
+.button-arena {
+    min-height: 120px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.yes-btn {
+    background: linear-gradient(135deg, #ff477e 0%, #ff70a6 100%);
+    color: white;
+    border: none;
+    padding: 14px 34px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(255, 71, 126, 0.45);
+    font-family: 'Quicksand', sans-serif;
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.25), box-shadow 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    animation: heartPulse 1.8s infinite ease-in-out;
+}
+
+.yes-btn:hover {
+    box-shadow: 0 12px 30px rgba(255, 71, 126, 0.6);
+}
+
+.no-btn {
+    background: #ffffff;
+    color: #888;
+    border: 1.5px solid #e0e0e0;
+    padding: 12px 24px;
+    font-size: 14.5px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    white-space: nowrap;
+    user-select: none;
+    z-index: 10;
+}
+
+.no-btn.broken-btn {
+    background: linear-gradient(135deg, #ffb703 0%, #fb8500 100%) !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 8px 20px rgba(251, 133, 0, 0.4) !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    animation: gentlePulse 1.5s infinite ease-in-out !important;
+}
+
+.click-hint {
+    font-size: 13.5px;
+    color: #e63946;
+    font-weight: 700;
+    min-height: 20px;
+    margin-top: 10px;
+}
+
+/* Celebration Section */
+.celebration-section {
+    padding: 6px 0;
+}
+
+.celebrate-title {
+    font-size: 23px;
+    color: #e63946;
+    margin-bottom: 8px;
+}
+
+.celebrate-sub {
+    font-size: 15px;
+    color: #ff4d6d;
+    margin-bottom: 18px;
+}
+
+.love-letter-box {
+    background: #fff8fa;
+    border: 2px dashed #ffccd5;
+    border-radius: 20px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(255, 117, 140, 0.1);
+}
+
+.love-letter-box p {
+    color: #444;
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Countdown Timer */
+.countdown-container {
+    background: #ffffff;
+    border: 1px solid #ffccd5;
+    border-radius: 18px;
+    padding: 14px 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(255, 107, 139, 0.12);
+}
+
+.countdown-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ff5277;
+    margin-bottom: 10px;
+}
+
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.timer-box {
+    background: linear-gradient(135deg, #fff0f3 0%, #ffe5ec 100%);
+    border: 1px solid #ffccd5;
+    border-radius: 12px;
+    padding: 8px 12px;
+    min-width: 58px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timer-box span {
+    font-size: 19px;
+    font-weight: 700;
+    color: #e63946;
+    line-height: 1.2;
+}
+
+.timer-box small {
+    font-size: 10.5px;
+    color: #888;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.celebrate-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 /* Burst Particle Animation */
@@ -307,7 +637,12 @@ video {
 
 @keyframes gentlePulse {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.08); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes heartPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 8px 22px rgba(255, 71, 126, 0.45); }
+    50% { transform: scale(1.06); box-shadow: 0 12px 28px rgba(255, 71, 126, 0.65); }
 }
 
 /* Keyframe Animations */
@@ -329,15 +664,15 @@ video {
 /* Mobile Responsiveness */
 @media (max-width: 480px) {
     .card {
-        padding: 28px 18px;
+        padding: 24px 18px;
     }
     
-    .card.expanded {
-        padding: 22px 14px;
+    .card.expanded, .date-card.expanded {
+        padding: 20px 14px;
     }
 
-    h1 {
-        font-size: 20px;
+    h1, .proposal-title {
+        font-size: 19px;
     }
 
     .romantic-message h2 {
@@ -346,5 +681,14 @@ video {
 
     .love-subtitle {
         font-size: 0.95rem;
+    }
+
+    .timer-box {
+        min-width: 50px;
+        padding: 6px 8px;
+    }
+
+    .timer-box span {
+        font-size: 16px;
     }
 }
