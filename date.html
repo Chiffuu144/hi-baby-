@@ -63,12 +63,121 @@
                 </div>
             </div>
 
+            <!-- 3 Special Gift Option Buttons (Above More Confetti) -->
+            <div class="gifts-container">
+                <h3 class="gifts-heading">🎁 Surprises Just For You, Baby:</h3>
+                <div class="gift-buttons-row">
+                    <button class="gift-btn" onclick="openGift(1)">
+                        <span class="gift-icon">💐</span>
+                        <span class="gift-title">Gift 1</span>
+                        <small class="gift-sub">Bouquet 🌸🌷</small>
+                    </button>
+                    <button class="gift-btn" onclick="openGift(2)">
+                        <span class="gift-icon">💌</span>
+                        <span class="gift-title">Gift 2</span>
+                        <small class="gift-sub">Love Letter ✍️</small>
+                    </button>
+                    <button class="gift-btn" onclick="openGift(3)">
+                        <span class="gift-icon">🎵</span>
+                        <span class="gift-title">Gift 3</span>
+                        <small class="gift-sub">Our Song 🎶</small>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Actions -->
             <div class="celebrate-actions">
                 <button class="primary-btn" onclick="createMassiveBurst()">More Confetti! 🎉🌸</button>
                 <a href="index.html" class="reset-btn">Back to Hydration 💧</a>
+                <button class="replay-btn" onclick="replayProposal()">Replay Proposal ↺</button>
             </div>
         </div>
     </main>
+
+    <!-- ==========================================
+         GIFT 1 MODAL: Cherry Blossom & Tulip Bouquet
+         ========================================== -->
+    <div id="giftModal1" class="gift-modal hidden">
+        <div class="modal-card">
+            <button class="close-modal-btn" onclick="closeGift(1)">✕</button>
+            <div class="modal-badge">Gift #1 💐</div>
+            <h2 class="modal-title">Cherry Blossom & Tulips Bouquet 🌸🌷</h2>
+            
+            <div class="bouquet-display" onclick="createEmojiBurst(['🌸', '🌷', '💐', '✨'])">
+                <div class="bouquet-art">🌸 🌷 🌸 🌷 🌸</div>
+                <div class="bouquet-ribbon">🎀 Wrapped with all my love 🎀</div>
+            </div>
+
+            <p class="modal-note">4 sweet notes for my pretty girl:</p>
+
+            <div class="sweet-messages-grid">
+                <div class="sweet-msg-card msg-pop-1">
+                    <span class="msg-heart">💖</span>
+                    <p>I think about you every single day, from the moment I wake up until I close my eyes. 💭</p>
+                </div>
+                <div class="sweet-msg-card msg-pop-2">
+                    <span class="msg-heart">🌸</span>
+                    <p>You are the prettiest, sweetest, and most precious girl in my whole universe. ✨</p>
+                </div>
+                <div class="sweet-msg-card msg-pop-3">
+                    <span class="msg-heart">🌷</span>
+                    <p>Every single day with you is my favorite day, and my heart will always choose you. 🥰</p>
+                </div>
+                <div class="sweet-msg-card msg-pop-4">
+                    <span class="msg-heart">💍</span>
+                    <p>I love you so, so much baby — always, completely, and forever! 💕</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         GIFT 2 MODAL: Typewriter Love Letter
+         ========================================== -->
+    <div id="giftModal2" class="gift-modal hidden">
+        <div class="modal-card letter-modal">
+            <button class="close-modal-btn" onclick="closeGift(2)">✕</button>
+            <div class="blossoms-fall-container" id="letterBlossoms"></div>
+            <div class="modal-badge">Gift #2 💌</div>
+            <h2 class="modal-title">A Letter For My Pretty Girl 🌸</h2>
+
+            <div class="letter-paper">
+                <div class="letter-stamp">💌</div>
+                <div id="typewriterText" class="typewriter-content"></div>
+                <span id="typeCursor" class="type-cursor">|</span>
+            </div>
+
+            <button class="retype-btn" onclick="startTypewriter()">Re-read Letter ✍️🌸</button>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         GIFT 3 MODAL: Special Song "Nahanap Kita" by Amiel Sol
+         ========================================== -->
+    <div id="giftModal3" class="gift-modal hidden">
+        <div class="modal-card song-modal">
+            <button class="close-modal-btn" onclick="closeGift(3)">✕</button>
+            <div class="modal-badge">Gift #3 🎵</div>
+            <h2 class="modal-title">A Song For You Only 🌹</h2>
+            <p class="song-sub"><strong>Nahanap Kita</strong> — Amiel Sol</p>
+
+            <div class="vinyl-player-box">
+                <div class="vinyl-disk" id="vinylDisk">
+                    <div class="vinyl-groove"></div>
+                    <div class="vinyl-center">❤️</div>
+                </div>
+                <div class="song-quote">
+                    <p><em>"Sa dinami-dami ng tao sa buong mundo, nahanap din kita..."</em> 🎶✨</p>
+                </div>
+            </div>
+
+            <div class="video-embed-box">
+                <iframe id="songIframe" width="100%" height="200" src="" title="Nahanap Kita - Amiel Sol" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <p class="song-footer-note">This song will always be ours. I love you baby! 💕</p>
+        </div>
+    </div>
 
     <script>
         let noClickCount = 0;
@@ -85,6 +194,27 @@
             "Pretty please? 🥺💖",
             "Oh no you broke it! The only option is yes hehe <3"
         ];
+
+        // State persistence: Check if already accepted on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('dateAccepted') === 'true') {
+                showCelebrationDirectly();
+            }
+        });
+
+        function showCelebrationDirectly() {
+            const proposalSec = document.getElementById('proposalSection');
+            const celebrationSec = document.getElementById('celebrationSection');
+            const dateCard = document.getElementById('dateCard');
+
+            if (proposalSec && celebrationSec && dateCard) {
+                dateCard.classList.add('expanded');
+                proposalSec.classList.add('hidden');
+                celebrationSec.classList.remove('hidden');
+                celebrationSec.classList.add('fade-in');
+                startCountdown();
+            }
+        }
 
         function handleNoClick() {
             noClickCount++;
@@ -164,6 +294,7 @@
         }
 
         function handleYesClick() {
+            localStorage.setItem('dateAccepted', 'true');
             createMassiveBurst();
 
             const proposalSec = document.getElementById('proposalSection');
@@ -181,6 +312,104 @@
             }, 300);
         }
 
+        function replayProposal() {
+            localStorage.removeItem('dateAccepted');
+            window.location.reload();
+        }
+
+        // ==========================================
+        // GIFTS HANDLER
+        // ==========================================
+        function openGift(giftNum) {
+            const modal = document.getElementById(`giftModal${giftNum}`);
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('modal-show');
+            }
+
+            if (giftNum === 1) {
+                createEmojiBurst(['🌸', '🌷', '💐', '💖', '✨', '🌹']);
+            } else if (giftNum === 2) {
+                startTypewriter();
+                startFallingBlossoms();
+            } else if (giftNum === 3) {
+                const iframe = document.getElementById('songIframe');
+                if (iframe) {
+                    iframe.src = "https://www.youtube-nocookie.com/embed/FPz9GSC5QlM?autoplay=1";
+                }
+                const disk = document.getElementById('vinylDisk');
+                if (disk) disk.classList.add('spinning');
+                createEmojiBurst(['🎵', '🎶', '🌹', '💖', '✨']);
+            }
+        }
+
+        function closeGift(giftNum) {
+            const modal = document.getElementById(`giftModal${giftNum}`);
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('modal-show');
+            }
+
+            if (giftNum === 2) {
+                if (typeInterval) clearInterval(typeInterval);
+            } else if (giftNum === 3) {
+                const iframe = document.getElementById('songIframe');
+                if (iframe) iframe.src = "";
+                const disk = document.getElementById('vinylDisk');
+                if (disk) disk.classList.remove('spinning');
+            }
+        }
+
+        // Gift 2 Typewriter Letter
+        const letterFullText = `Hi baby,\n\nHappy hydration day, my love! 🌸 I just wanted to remind you how deeply and truly I cherish having you in my life. Every time I see your smile, my whole day lights up.\n\nThank you for being you, for your kindness, and for choosing to spend September 26 with me. I promise to make every second count and treat you like the princess you are.\n\nStay hydrated, take care of yourself, and always remember that I love you more and more every single day. 💕\n\nForever yours,\nYour love ❤️`;
+
+        let typeIndex = 0;
+        let typeInterval = null;
+
+        function startTypewriter() {
+            const textContainer = document.getElementById('typewriterText');
+            const cursor = document.getElementById('typeCursor');
+            if (!textContainer) return;
+
+            textContainer.innerHTML = '';
+            typeIndex = 0;
+            if (cursor) cursor.style.display = 'inline-block';
+            if (typeInterval) clearInterval(typeInterval);
+
+            typeInterval = setInterval(() => {
+                if (typeIndex < letterFullText.length) {
+                    const char = letterFullText[typeIndex];
+                    if (char === '\n') {
+                        textContainer.innerHTML += '<br>';
+                    } else {
+                        textContainer.innerHTML += char;
+                    }
+                    typeIndex++;
+                } else {
+                    clearInterval(typeInterval);
+                }
+            }, 36);
+        }
+
+        function startFallingBlossoms() {
+            const container = document.getElementById('letterBlossoms');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 14; i++) {
+                const blossom = document.createElement('span');
+                blossom.className = 'falling-blossom';
+                blossom.innerText = Math.random() > 0.5 ? '🌸' : '🌺';
+                blossom.style.left = Math.random() * 92 + '%';
+                blossom.style.animationDelay = (Math.random() * 3) + 's';
+                blossom.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(blossom);
+            }
+        }
+
+        // ==========================================
+        // CELEBRATION & BURST EFFECTS
+        // ==========================================
         function createEmojiBurst(emojis) {
             const card = document.getElementById('dateCard');
             const rect = card.getBoundingClientRect();
@@ -208,7 +437,7 @@
         }
 
         function createMassiveBurst() {
-            const emojis = ['🌹', '💖', '💐', '✨', '🎉', '💍', '🥰', '💕', '🌸', '❤️'];
+            const emojis = ['🌹', '💖', '💐', '✨', '🎉', '💍', '🥰', '💕', '🌸', '❤️', '🌷'];
             const card = document.getElementById('dateCard');
             const rect = card.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
@@ -242,7 +471,8 @@
                 const distance = targetDate - now;
 
                 if (distance < 0) {
-                    document.getElementById('countdownTimer').innerHTML = "<span>It's Date Day! 🌹🎉💖</span>";
+                    const timerElem = document.getElementById('countdownTimer');
+                    if (timerElem) timerElem.innerHTML = "<span>It's Date Day! 🌹🎉💖</span>";
                     return;
                 }
 

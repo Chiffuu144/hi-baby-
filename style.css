@@ -71,12 +71,12 @@ body {
 }
 
 .card.expanded, .date-card.expanded {
-    max-width: 470px;
+    max-width: 480px;
     padding: 28px 24px;
 }
 
 .date-card {
-    max-width: 450px;
+    max-width: 460px;
 }
 
 /* Top Navigation Bar */
@@ -397,6 +397,21 @@ video {
     transform: translateY(-2px);
 }
 
+.replay-btn {
+    background: transparent;
+    color: #aaa;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    margin-top: 4px;
+    transition: color 0.2s ease;
+}
+
+.replay-btn:hover {
+    color: #ff758c;
+}
+
 /* ==========================================
    DATE PROPOSAL PAGE STYLES
    ========================================== */
@@ -485,7 +500,7 @@ video {
     white-space: nowrap;
     user-select: none;
     position: relative;
-    z-index: 100 !important; /* Ensure NO button is ALWAYS on top and never covered */
+    z-index: 100 !important;
     transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -530,7 +545,7 @@ video {
     border: 2px dashed #ffccd5;
     border-radius: 20px;
     padding: 16px 18px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     box-shadow: 0 4px 12px rgba(255, 117, 140, 0.1);
 }
 
@@ -590,6 +605,73 @@ video {
     text-transform: uppercase;
 }
 
+/* ==========================================
+   GIFTS SECTION STYLING
+   ========================================== */
+.gifts-container {
+    background: linear-gradient(135deg, #fff0f5 0%, #ffeef2 100%);
+    border: 2px solid #ffccd5;
+    border-radius: 22px;
+    padding: 16px 14px;
+    margin-bottom: 22px;
+    box-shadow: 0 6px 18px rgba(255, 117, 140, 0.15);
+}
+
+.gifts-heading {
+    font-size: 14.5px;
+    color: #e63946;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.gift-buttons-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.gift-btn {
+    background: white;
+    border: 1.5px solid #ffb3c6;
+    border-radius: 16px;
+    padding: 10px 14px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 10px rgba(255, 117, 140, 0.15);
+    flex: 1;
+    min-width: 95px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.gift-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    border-color: #ff477e;
+    box-shadow: 0 8px 18px rgba(255, 71, 126, 0.3);
+    background: #fff8fa;
+}
+
+.gift-icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.gift-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #d81b60;
+}
+
+.gift-sub {
+    font-size: 11px;
+    color: #888;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
 .celebrate-actions {
     display: flex;
     flex-direction: column;
@@ -597,11 +679,322 @@ video {
     gap: 10px;
 }
 
+/* ==========================================
+   GIFT MODALS & POPUPS
+   ========================================== */
+.gift-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-card {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 28px;
+    max-width: 440px;
+    width: 100%;
+    padding: 28px 22px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: #ffe5ec;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 16px;
+    color: #ff477e;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-weight: 700;
+}
+
+.close-modal-btn:hover {
+    background: #ff477e;
+    color: white;
+    transform: scale(1.1);
+}
+
+.modal-badge {
+    display: inline-block;
+    background: #ffe5ec;
+    color: #e63946;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 50px;
+    margin-bottom: 8px;
+}
+
+.modal-title {
+    font-size: 20px;
+    color: #2b2b2b;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.modal-note {
+    font-size: 13.5px;
+    color: #888;
+    margin-bottom: 14px;
+    font-weight: 600;
+}
+
+/* Bouquet Display */
+.bouquet-display {
+    background: #fff5f8;
+    border: 2px dashed #ffb3c6;
+    border-radius: 20px;
+    padding: 16px 12px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.bouquet-display:hover {
+    transform: scale(1.02);
+}
+
+.bouquet-art {
+    font-size: 36px;
+    letter-spacing: 6px;
+    margin-bottom: 6px;
+    animation: gentlePulse 2s infinite ease-in-out;
+}
+
+.bouquet-ribbon {
+    font-size: 12px;
+    color: #e63946;
+    font-weight: 700;
+}
+
+/* Sweet Messages Grid */
+.sweet-messages-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sweet-msg-card {
+    background: white;
+    border: 1px solid #ffccd5;
+    border-radius: 16px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+    box-shadow: 0 3px 8px rgba(255, 117, 140, 0.1);
+    animation: popIn 0.4s ease forwards;
+}
+
+.sweet-msg-card p {
+    font-size: 13.5px;
+    color: #444;
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.msg-heart {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+/* Letter Modal & Typewriter */
+.letter-modal {
+    position: relative;
+    overflow: hidden;
+}
+
+.blossoms-fall-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.falling-blossom {
+    position: absolute;
+    top: -20px;
+    font-size: 16px;
+    animation: blossomFall linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes blossomFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    20% { opacity: 0.8; }
+    80% { opacity: 0.8; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+.letter-paper {
+    background: #fffdf9;
+    border: 1.5px solid #f3d7ce;
+    border-radius: 18px;
+    padding: 20px 18px;
+    margin-bottom: 16px;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    min-height: 220px;
+}
+
+.letter-stamp {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 22px;
+    opacity: 0.8;
+}
+
+.typewriter-content {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.65;
+    font-weight: 600;
+    display: inline;
+}
+
+.type-cursor {
+    font-weight: 700;
+    color: #ff477e;
+    animation: blink 0.8s infinite;
+}
+
+.retype-btn {
+    background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    font-size: 13.5px;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    box-shadow: 0 4px 12px rgba(255, 117, 140, 0.35);
+    transition: all 0.2s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.retype-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 117, 140, 0.5);
+}
+
+/* Song Modal & Vinyl Player */
+.song-sub {
+    font-size: 14px;
+    color: #ff4d6d;
+    margin-bottom: 14px;
+}
+
+.vinyl-player-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.vinyl-disk {
+    width: 80px;
+    height: 80px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    margin-bottom: 10px;
+    border: 3px solid #333;
+    position: relative;
+}
+
+.vinyl-disk.spinning {
+    animation: rotateVinyl 4s linear infinite;
+}
+
+@keyframes rotateVinyl {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.vinyl-center {
+    width: 28px;
+    height: 28px;
+    background: #ff477e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.song-quote {
+    background: #fff0f5;
+    border-radius: 12px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+}
+
+.song-quote p {
+    font-size: 13.5px;
+    color: #d81b60;
+    margin: 0;
+    font-weight: 700;
+}
+
+.video-embed-box {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    margin-bottom: 12px;
+    background: #000;
+}
+
+.song-footer-note {
+    font-size: 13px;
+    color: #ff477e;
+    font-weight: 700;
+    margin: 0;
+}
+
 /* Burst Particle Animation */
 .burst-particle {
     position: fixed;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 99999;
     font-size: 24px;
     user-select: none;
     transform: translate(-50%, -50%);
@@ -631,6 +1024,11 @@ video {
 
 .fade-in {
     animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 @keyframes popIn {
@@ -705,5 +1103,14 @@ video {
 
     .timer-box span {
         font-size: 16px;
+    }
+
+    .gift-btn {
+        min-width: 80px;
+        padding: 8px 10px;
+    }
+
+    .gift-title {
+        font-size: 12px;
     }
 }

@@ -91,7 +91,17 @@
     </main>
 
     <script>
-        let cupsFilled = 3;
+        let cupsFilled = parseInt(localStorage.getItem('cupsFilled')) || 3;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateCupsUI();
+            if (localStorage.getItem('dateAccepted') === 'true') {
+                const surpriseBtn = document.querySelector('.surprise-btn');
+                const dateCtaBtn = document.querySelector('.date-cta-btn');
+                if (surpriseBtn) surpriseBtn.innerText = "See your special gifts & countdown! 💌🎁";
+                if (dateCtaBtn) dateCtaBtn.innerText = "Open your special gifts baby! 💌🎁";
+            }
+        });
 
         function toggleCup(index) {
             const cups = document.querySelectorAll('.cup');
@@ -100,6 +110,7 @@
             } else {
                 cupsFilled = index + 1;
             }
+            localStorage.setItem('cupsFilled', cupsFilled);
             updateCupsUI();
         }
 
