@@ -107,15 +107,15 @@
             const basePadY = 14;
             const basePadX = 34;
 
-            const newFontSize = baseFontSize + (noClickCount * 4);
-            const newPadY = basePadY + (noClickCount * 3.5);
-            const newPadX = basePadX + (noClickCount * 7);
-            const scale = 1 + (noClickCount * 0.1);
+            const newFontSize = baseFontSize + (noClickCount * 4.5);
+            const newPadY = basePadY + (noClickCount * 3.8);
+            const newPadX = basePadX + (noClickCount * 7.5);
+            const scale = 1 + (noClickCount * 0.08);
 
             yesBtn.style.fontSize = `${newFontSize}px`;
             yesBtn.style.padding = `${newPadY}px ${newPadX}px`;
             yesBtn.style.transform = `scale(${scale})`;
-            yesBtn.style.zIndex = "50";
+            yesBtn.style.zIndex = "10";
 
             // Check if 10 or more clicks (Broken Button state)
             if (noClickCount >= 10) {
@@ -124,31 +124,43 @@
                 noBtn.style.left = '0';
                 noBtn.style.top = '0';
                 noBtn.style.transform = 'none';
+                noBtn.style.zIndex = '100';
                 noBtn.onclick = handleYesClick;
                 hint.innerText = "The 'No' button gave up! You have to say YES now hehe 💕";
                 return;
             }
 
-            // Move the NO button away
+            // Move the NO button away safely without being covered
             moveNoButton();
         }
 
         function moveNoButton() {
             const noBtn = document.getElementById('noBtn');
-            const arena = document.getElementById('buttonArena');
-            const arenaRect = arena.getBoundingClientRect();
+            const yesBtn = document.getElementById('yesBtn');
             
-            // Random offset within arena and safe margins
-            const maxOffsetX = Math.min(window.innerWidth / 2 - 80, 140);
-            const maxOffsetY = 110;
+            // Ensure noBtn is ALWAYS layered on top
+            noBtn.style.zIndex = "100";
 
-            const randomX = (Math.random() * 2 - 1) * maxOffsetX;
-            const randomY = (Math.random() * 2 - 1) * maxOffsetY;
+            // Calculate safe positions that never overlap with yesBtn
+            const yesRect = yesBtn.getBoundingClientRect();
+            const safeDistanceY = Math.max(70, (yesRect.height / 2) + 38);
+            const safeDistanceX = Math.min(135, Math.max(75, (yesRect.width / 2) + 50));
 
+            const directions = [
+                { x: 0, y: -safeDistanceY },                             // Straight Top
+                { x: 0, y: safeDistanceY },                              // Straight Bottom
+                { x: -safeDistanceX, y: -safeDistanceY * 0.7 },          // Top Left
+                { x: safeDistanceX, y: -safeDistanceY * 0.7 },           // Top Right
+                { x: -safeDistanceX, y: safeDistanceY * 0.7 },           // Bottom Left
+                { x: safeDistanceX, y: safeDistanceY * 0.7 }            // Bottom Right
+            ];
+
+            const chosen = directions[Math.floor(Math.random() * directions.length)];
+            
             noBtn.style.position = 'relative';
-            noBtn.style.left = `${randomX}px`;
-            noBtn.style.top = `${randomY}px`;
-            noBtn.style.transition = 'all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            noBtn.style.left = `${chosen.x}px`;
+            noBtn.style.top = `${chosen.y}px`;
+            noBtn.style.transition = 'all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
         }
 
         function handleYesClick() {
