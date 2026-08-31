@@ -83,19 +83,28 @@
     </main>
 
     <script>
-        let cupsFilled = parseInt(localStorage.getItem('cupsFilled')) || 3;
+        // ==========================================
+        // DAILY RESET: Resets at midnight (new calendar day)
+        // ==========================================
+        function getTodayKey() {
+            const now = new Date();
+            // Format: YYYY-MM-DD in local time
+            return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+        }
 
-        const hydrationMessages = [
-            "Drink up for me please baby? Your body needs water! 🥺🥛",
-            "Good start baby! Drink more water for me please 💕",
-            "Proud of you! Keep going pretty girl, stay hydrated! 🌸",
-            "Refreshing! 3 glasses down, keep it up baby! 💧✨",
-            "Halfway there my love! You're doing so amazing! 🥰💖",
-            "Rawrrr good girl! Keep drinking more water baby! 🐾💕",
-            "Yayy almost done! Just 2 more glasses, you got this baby! 🌷✨",
-            "Just 1 more glass left! One final sip for your boy! 💍🌹",
-            "YAYYY! 8 glasses done! You reached your goal today! 🎉💖"
-        ];
+        const savedDay   = localStorage.getItem('cupsDate');
+        const todayKey   = getTodayKey();
+        let cupsFilled;
+
+        if (savedDay === todayKey) {
+            // Same day — restore saved progress
+            cupsFilled = parseInt(localStorage.getItem('cupsFilled')) || 0;
+        } else {
+            // New day (past midnight) — reset to 0 and save today's date
+            cupsFilled = 0;
+            localStorage.setItem('cupsFilled', 0);
+            localStorage.setItem('cupsDate', todayKey);
+        }
 
         window.addEventListener('DOMContentLoaded', () => {
             updateCupsUI();
@@ -115,9 +124,22 @@
                 cupsFilled = index + 1;
             }
             localStorage.setItem('cupsFilled', cupsFilled);
+            localStorage.setItem('cupsDate', getTodayKey());
             createHeartBurst();
             updateCupsUI();
         }
+
+        const hydrationMessages = [
+            "Drink up for me please baby? Your body needs water! 🥺🥛",
+            "Good start baby! Drink more water for me please 💕",
+            "Proud of you! Keep going pretty girl, stay hydrated! 🌸",
+            "Refreshing! 3 glasses down, keep it up baby! 💧✨",
+            "Halfway there my love! You're doing so amazing! 🥰💖",
+            "Rawrrr good girl! Keep drinking more water baby! 🐾💕",
+            "Yayy almost done! Just 2 more glasses, you got this baby! 🌷✨",
+            "Just 1 more glass left! One final sip for your boy! 💍🌹",
+            "YAYYY! 8 glasses done! You reached your goal today! 🎉💖"
+        ];
 
         function updateCupsUI() {
             const cups = document.querySelectorAll('.cup');
