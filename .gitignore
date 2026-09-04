@@ -1,0 +1,6 @@
+.vscode/
+node-v20.20.2-x64.msi
+functions/
+OTP_BACKEND_SETUP.md
+firebase.json
+firestore.rules

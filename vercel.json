@@ -1,0 +1,1 @@
+{ "outputDirectory": "frontend", "functions": { "api/otp.js": { "maxDuration": 10 } } }
